@@ -1,6 +1,7 @@
 import json
 import pprint
 import threading
+import time
 from queue import Queue
 
 import websocket
@@ -135,6 +136,8 @@ if __name__ == "__main__":
             continue
 
         # Кладем в наш dict и печатаем его
+        # Напоминаю, мы все еще в MainThread и sym_to_price_map создана в нем,
+        # поэтому это обращение безопасно.
         sym_to_price_map[symbol_name] = price
         pprint.pprint(sym_to_price_map)
 
@@ -145,6 +148,12 @@ if __name__ == "__main__":
         # MainThread обрабатывать сообщения, если очередь постоянно растет -
         # значит мы не успеваем и уже нужно думать об оптимизации нашей
         # логики и пр.
+
+        # В конце цикла, после нашей логики.
+        # Есть мнение, что добавление time.sleep(0.001) - 1 миллисекунда -
+        # помогает context switch'у на всяких windows системах, т.е.
+        # помогаем передать управление WebSocketThread
+        time.sleep(0.001)
 
     # До этой строчки мы не дойдем, поскольку вечный цикл выше, но
     # Такой способ заблокироваться в MainThread и ждать когда WebSocketThread
