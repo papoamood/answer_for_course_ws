@@ -4,6 +4,7 @@ import threading
 import time
 from queue import Queue
 
+# pip install websocket-client
 import websocket
 
 # создаем очередь
