@@ -18,7 +18,7 @@ queue = Queue()
 sym_to_price_map: dict[str, float] = {}
 
 
-# Подготавливаем наши функции-обработчики для WebSocketApp обьекта.
+# Подготавливаем наши функции-обработчики для WebSocketApp объекта.
 # Все эти функции будут работать в отдельном треде - WebSocketThread (его мы создадим ниже).
 # Как это работает.
 # Мы создадим тред WebSocketThread и передадим треду функцию run_forever, которую он запустит.
@@ -31,7 +31,7 @@ sym_to_price_map: dict[str, float] = {}
 # Внутри функции run_forever() пришло сообщение от binance -
 # библиотека сообщение обработала и вызвала нашу функцию-колбэк
 # on_message(_wsapp, message). Внутри нее мы преобразовали из
-# json в python обьект (словарь или dict в нашем случае), и просто передадим в очередь.
+# json в python объект (словарь или dict в нашем случае), и просто передадим в очередь.
 def on_message(_wsapp, message):
     # К слову бибилотека ожидает именно такие сигнатуры функций, как
     # в этом файле, удалять аргументы нельзя (они позционные) и функция
@@ -95,7 +95,7 @@ if __name__ == "__main__":
 
     url = f'wss://stream.binance.com:443/stream?streams={"/".join(list_streams)}'
 
-    # Подготавливаем обьект WebSocketApp, передаем подготовленные url и колбэки
+    # Подготавливаем объект WebSocketApp, передаем подготовленные url и колбэки
     websocket_app = websocket.WebSocketApp(
         url,
         on_message=on_message,
@@ -105,8 +105,8 @@ if __name__ == "__main__":
         on_open=on_open,
     )
 
-    # Подготавливаем обьект WebSocketThread - обьект треда.
-    # Обратите внимание мы передаем именно саму функцию как обьект, а не её вызов -
+    # Подготавливаем объект WebSocketThread - объект треда.
+    # Обратите внимание мы передаем именно саму функцию как объект, а не её вызов -
     # нет скобок после run_forever
     WebSocketThread = threading.Thread(target=websocket_app.run_forever)
 
